@@ -1,19 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Find Word</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.word.label }}<br>
-            {{ form.word(size=32 }}
-        </p>
-        <p>
-            {{ form.url.label }}<br>
-            {{ form.url(size=32) }}
-        </p>
-        <p>{{ form.submit()}}</p>
-    </form>
+    <h1>Word Count App</h1>
+    <p>
+        Count how many times a word appears in a given webpage.
+    </p>
 
 
 {% endblock %}
