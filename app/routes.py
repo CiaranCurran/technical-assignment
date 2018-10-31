@@ -13,12 +13,5 @@ def form():
     form = WordCountForm()
     if form.validate_on_submit():
         scraped = Scraper(form.word.data, form.url.data)
-        message = ""
-        message += 'The word "{}" appears in {} {} times<br><br>'.format(
-            scraped.word, scraped.url, scraped.countWord())
-
-        for sentence, polarity in scraped.getSentiments().items():
-            message += '{} : {} <br><br>'.format(sentence, polarity)
-
-        return render_template('form.html', title='Word Count App', form=form, message=message)
-    return render_template('form.html', title='Word Count App', form=form)
+        return render_template('form.html', title='Word Count App', form=form, complete=True, scraped=scraped)
+    return render_template('form.html', title='Word Count App', form=form, complete=False)

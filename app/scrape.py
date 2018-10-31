@@ -12,8 +12,8 @@ class Scraper:
         self.text = text_from_html(source)
 
     def countWord(self):
-        count = self.text.count(self.word)
-        return count
+        self.count = self.text.count(self.word)
+        return self.count
 
     #returns dictionary of sentence and polarity key/value pairs
     def getSentiments(self):

@@ -1,27 +1,59 @@
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
     <h1>Count Word</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.word.label }}<br>
-            {{ form.word(size=32) }}<br>
-            {% for error in form.word.errors %}
-            <span style="color: #ff007d;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.url.label }}<br>
-            {{ form.url(size=32) }}<br>
-            {% for error in form.url.errors %}
-            <span style="color: #ff007d;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p><br>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
 
-        <p>{% autoescape off %}{{ message }}{% endautoescape %}</p>
-    </form>
+
+    {% if complete %}
+
+        <br>
+        <div class="panel panel-primary">
+            <div class="panel-heading">{{ "{} Occurences".format(scraped.countWord()) }}</div>
+            <div class="panel-body"> {{"The word '{}' appears in the url {} {} times".format(scraped.word,
+                    scraped.url, scraped.count)}}</div>
+            </div>
+        </div>
+
+
+        <br>
+        <h2>{{ 'Sentences in which the word "{}" appears:'.format(scraped.word) }}</h2>
+        <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Sentence</th>
+              <th scope="col">Polarity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% set i = namespace(value=1) %}
+            {% for sentence, polarity in scraped.getSentiments().items() %}
+            {% if polarity < 0 %}
+            <tr bgcolor="#cd5c5c">
+                {% elif polarity > 0 %}
+            <tr bgcolor="#adff2f">
+                {% else %}
+                <tr>
+                {% endif %}
+
+
+
+              <th scope="row">{{ i.value }}</th>
+              <td>{{ sentence }}</td>
+              <td>{{ polarity }}</td>
+            </tr>
+            {% set i.value = i.value + 1 %}
+            {% endfor %}
+          </tbody>
+        </table>
+    {% endif %}
+
 
 
 {% endblock %}
