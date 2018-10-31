@@ -4,15 +4,19 @@ import requests
 from textblob import TextBlob
 
 class Scraper:
-    def __init__(self, word, url):
+    def __init__(self, word, url, case):
         self.word = word
         self.url = url
+        self.case = case
 
         source = requests.get(url).text
         self.text = text_from_html(source)
 
     def countWord(self):
-        self.count = self.text.count(self.word)
+        if self.case:
+            self.count = self.text.count(self.word)
+        else:
+            self.count = self.text.lower().count(self.word.lower())
         return self.count
 
     #returns dictionary of sentence and polarity key/value pairs
@@ -21,9 +25,14 @@ class Scraper:
         blob = TextBlob(self.text)
 
         #extract sentences in which the given word appears
-        for sentence in blob.sentences:
-            if self.word in sentence:
-                sentences.append(sentence)
+        if self.case:
+            for sentence in blob.sentences:
+                if self.word in sentence:
+                    sentences.append(sentence)
+        else:
+            for sentence in blob.sentences:
+                if self.word.lower() in sentence.lower():
+                    sentences.append(sentence)
 
         sentiments = {}
         for sentence in sentences:
