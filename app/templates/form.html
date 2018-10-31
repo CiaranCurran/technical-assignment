@@ -20,7 +20,7 @@
         </p>
         <p>{{ form.submit() }}</p><br>
 
-        <p>{{ message }}</p>
+        <p>{% autoescape off %}{{ message }}{% endautoescape %}</p>
     </form>
 
 
