@@ -6,7 +6,7 @@ from app.scrape import Scraper
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html', title='Word Count App')
+    return render_template('index.html')
 
 @app.route('/form', methods=['GET', 'POST'])
 def form():
