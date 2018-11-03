@@ -8,3 +8,5 @@ app.config.from_object(Config)
 bootstrap = Bootstrap(app)
 
 from app import routes
+
+app.run(debug=True, host='0.0.0.0')
