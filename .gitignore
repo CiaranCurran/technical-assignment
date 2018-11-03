@@ -1,6 +1,5 @@
 venv/
 .idea/
-nltk_data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
